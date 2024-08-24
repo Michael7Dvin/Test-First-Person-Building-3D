@@ -1,4 +1,5 @@
-﻿using _CodeBase.Infrastructure.Services.SceneLoader.Service;
+﻿using _CodeBase.Infrastructure.Services.AddressablesLoader;
+using _CodeBase.Infrastructure.Services.SceneLoader.Service;
 using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.Infrastructure.StateMachine;
 using _CodeBase.Infrastructure.StateMachine.States;
@@ -34,6 +35,7 @@ namespace _CodeBase.Infrastructure.Installers
                 .AsSingle()
                 .WithArguments(_scenesAddresses);
             
+            Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
         }
     }
