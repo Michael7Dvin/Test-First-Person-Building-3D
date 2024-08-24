@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace _CodeBase.Infrastructure.Services.SceneLoader.Service
+namespace _CodeBase.StaticData
 {
-    [CreateAssetMenu(menuName = "StaticData/Addresses/Scenes", fileName = "SceneAddresses")]
+    [CreateAssetMenu(menuName = "StaticData/ScenesAddresses", fileName = "ScenesAddresses")]
     public class ScenesAddresses : ScriptableObject
     {
         [field: SerializeField] public AssetReference Level { get; private set; }

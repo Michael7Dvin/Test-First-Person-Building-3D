@@ -2,6 +2,7 @@
 using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.Infrastructure.StateMachine;
 using _CodeBase.Infrastructure.StateMachine.States;
+using _CodeBase.StaticData;
 using UnityEngine;
 using Zenject;
 

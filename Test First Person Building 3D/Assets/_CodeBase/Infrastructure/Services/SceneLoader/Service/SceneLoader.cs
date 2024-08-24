@@ -1,4 +1,5 @@
 ﻿using _CodeBase.Infrastructure.Services.StaticDataProvider;
+using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -23,7 +24,7 @@ namespace _CodeBase.Infrastructure.Services.SceneLoader.Service
         {
             switch (id)
             {
-                case SceneID.Level:
+                case SceneID.Room:
                     await Load(_scenes.Level);
                     break;
                 default:

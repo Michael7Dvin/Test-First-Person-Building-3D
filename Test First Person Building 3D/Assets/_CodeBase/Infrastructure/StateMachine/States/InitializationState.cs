@@ -23,7 +23,7 @@ namespace _CodeBase.Infrastructure.StateMachine.States
             
             Application.targetFrameRate = 60;
             
-            _gameStateMachine.EnterState<SceneLoadingState, SceneID>(SceneID.Level);
+            _gameStateMachine.EnterState<SceneLoadingState, SceneID>(SceneID.Room);
         }
 
         public void Exit()
