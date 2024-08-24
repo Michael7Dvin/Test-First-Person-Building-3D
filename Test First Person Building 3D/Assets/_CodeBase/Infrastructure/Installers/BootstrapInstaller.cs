@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using _CodeBase.Infrastructure.Bootstrappers;
+using Zenject;
 
 namespace _CodeBase.Infrastructure.Installers
 {
@@ -11,7 +12,7 @@ namespace _CodeBase.Infrastructure.Installers
 
         private void BindBootstrapper()
         {
-            Container.BindInterfacesTo<Bootstrapper.Bootstrapper>().AsSingle();
+            Container.BindInterfacesTo<Bootstrapper>().AsSingle();
         }
     }
 }
