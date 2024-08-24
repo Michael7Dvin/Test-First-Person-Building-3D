@@ -9,17 +9,12 @@ namespace _CodeBase.Gameplay.Player
     {
         private IInputService _inputService;
         
-        private IPlayerCameraLook _playerCameraLook;
+        [SerializeField] private PlayerCameraLook _playerCameraLook;
 
         [Inject]
         public void InjectServices(IInputService inputService) => 
             _inputService = inputService;
 
-        public void Construct(IPlayerCameraLook playerCameraLook)
-        {
-            _playerCameraLook = playerCameraLook;
-        }
-        
         private void Update()
         {
             _playerCameraLook.Rotate(_inputService.PlayerCameraLook);

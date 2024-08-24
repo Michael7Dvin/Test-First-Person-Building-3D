@@ -29,7 +29,7 @@ namespace _CodeBase.Infrastructure.Installers
         {
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-            Container.BindInterfacesAndSelfTo<IInputService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
             
             Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
         }

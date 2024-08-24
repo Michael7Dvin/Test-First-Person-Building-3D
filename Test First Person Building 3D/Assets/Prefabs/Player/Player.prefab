@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7262667102374491944}
   - component: {fileID: 1659417111478444958}
+  - component: {fileID: 2495881408831769229}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -56,6 +57,19 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2495881408831769229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36097561414115813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2991bcac318049689b5b27c4d81758ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerCameraLook: {fileID: 9016903752075616894}
 --- !u!1001 &6498156016201489201
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -64,6 +78,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7262667102374491944}
     m_Modifications:
+    - target: {fileID: 2813742921757194575, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
+      propertyPath: _bodyTransform
+      value: 
+      objectReference: {fileID: 7262667102374491944}
     - target: {fileID: 5213827480904437615, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
       propertyPath: m_Name
       value: Player Camera
@@ -118,3 +136,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7009518790890730965, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
   m_PrefabInstance: {fileID: 6498156016201489201}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9016903752075616894 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2813742921757194575, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
+  m_PrefabInstance: {fileID: 6498156016201489201}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2d16d33271a4fc1bbcaff3ab8b34b8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

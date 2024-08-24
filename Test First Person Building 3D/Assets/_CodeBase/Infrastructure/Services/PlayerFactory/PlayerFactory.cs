@@ -1,4 +1,6 @@
-﻿using _CodeBase.Infrastructure.Services.AddressablesLoader;
+﻿using _CodeBase.Gameplay.Player;
+using _CodeBase.Gameplay.Player.CameraLook;
+using _CodeBase.Infrastructure.Services.AddressablesLoader;
 using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -27,7 +29,7 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
         public async UniTask Create(Vector3 position, Quaternion rotation)
         {
             GameObject playerPrefab = await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
-            GameObject playerGameObject = _instantiator.InstantiatePrefab(playerPrefab, position, rotation, null);
+            Player player = _instantiator.InstantiatePrefabForComponent<Player>(playerPrefab, position, rotation, null);
         }
     }
 }

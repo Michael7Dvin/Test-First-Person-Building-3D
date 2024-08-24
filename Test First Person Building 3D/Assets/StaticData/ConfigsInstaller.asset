@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scenesAddresses: {fileID: 11400000, guid: d1bb2a25240b1a3439987ba19c8983e9, type: 2}
   _prefabAddresses: {fileID: 11400000, guid: 442d5a61cd79b23409895bcbee647ed0, type: 2}
+  _playerInputSettings: {fileID: 11400000, guid: 77c995a9cb489cb4ebe600b3e44e3243, type: 2}
   _roomLevelConfig: {fileID: 11400000, guid: 7100fa4bcc9f7824ea1babd18909df27, type: 2}

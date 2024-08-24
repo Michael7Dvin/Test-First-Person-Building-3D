@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player.CameraLook
 {
-    public class PlayerCameraLook : IPlayerCameraLook 
+    public class PlayerCameraLook : MonoBehaviour 
     {
-        private readonly Transform _cameraTransform;
-        private readonly Transform _bodyTransform;
+        [SerializeField] private Transform _cameraTransform;
+        [SerializeField] private Transform _bodyTransform;
 
         public PlayerCameraLook(Transform cameraTransform, Transform bodyTransform)
         {

@@ -16,6 +16,12 @@ namespace _CodeBase.Infrastructure.Services.InputService
         }
 
         public Vector2 PlayerCameraLook { get; private set; }
+        
+        public void Enable()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            _inputSystemActions.Enable();
+        }
 
         public void Tick()
         {
