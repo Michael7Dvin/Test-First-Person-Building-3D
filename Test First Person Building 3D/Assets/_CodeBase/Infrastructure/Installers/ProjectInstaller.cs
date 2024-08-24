@@ -13,6 +13,8 @@ namespace _CodeBase.Infrastructure.Installers
     public class ProjectInstaller : MonoInstaller
     {
         [SerializeField] private ScenesAddresses _scenesAddresses; 
+        [SerializeField] private PrefabAddresses _prefabAddresses; 
+        [SerializeField] private RoomLevelConfig _roomLevelConfig; 
         
         public override void InstallBindings()
         {
@@ -24,8 +26,9 @@ namespace _CodeBase.Infrastructure.Installers
         {
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
             Container.Bind<InitializationState>().AsSingle();
-            Container.Bind<GameplayState>().AsSingle();
             Container.Bind<SceneLoadingState>().AsSingle();
+            Container.Bind<WorldSpawningState>().AsSingle();
+            Container.Bind<GameplayState>().AsSingle();
         }
 
         private void BindServices()
@@ -34,7 +37,7 @@ namespace _CodeBase.Infrastructure.Installers
                 .Bind<IStaticDataProvider>()
                 .To<StaticDataProvider>()
                 .AsSingle()
-                .WithArguments(_scenesAddresses);
+                .WithArguments(_scenesAddresses, _prefabAddresses, _roomLevelConfig);
             
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();

@@ -1,4 +1,5 @@
 ﻿using _CodeBase.Infrastructure.Services.AddressablesLoader;
+using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -14,11 +15,11 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
 
         public PlayerFactory(IInstantiator instantiator,
             IAddressablesLoader addressablesLoader,
-            PrefabAddresses prefabAddresses)
+            IStaticDataProvider staticDataProvider)
         {
             _instantiator = instantiator;
             _addressablesLoader = addressablesLoader;
-            _prefabAddresses = prefabAddresses;
+            _prefabAddresses = staticDataProvider.PrefabAddresses;
         }
 
         public async UniTask WarmUp() => 
