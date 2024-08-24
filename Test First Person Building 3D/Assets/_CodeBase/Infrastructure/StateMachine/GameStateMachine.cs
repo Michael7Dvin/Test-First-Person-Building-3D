@@ -13,23 +13,35 @@ namespace _CodeBase.Infrastructure.StateMachine
 
         public void EnterState<TState>() where TState : IState
         {
+            if (_states.ContainsKey(typeof(TState)) == false)
+            {
+                Debug.LogError($"Unable to enter state. State: '{typeof(TState).Name}' not found in dictionary: '{nameof(_states)}'");
+                return;
+            }
+            
             _activeState?.Exit();
 
             if (_states[typeof(TState)] is TState state)
             {
                 _activeState = state;
-                Debug.Log($"Entered: {typeof(TState).Name}");
+                Debug.Log($"Entered state: '{typeof(TState).Name}'");
                 state.Enter();
             }
         }
 
         public void EnterState<TState, TArgs>(TArgs args) where TState : IStateWithArgument<TArgs>
         {
+            if (_states.ContainsKey(typeof(TState)) == false)
+            {
+                Debug.LogError($"Unable to enter state. State: '{typeof(TState).Name}' not found in dictionary: '{nameof(_states)}'");
+                return;
+            }
+            
             _activeState?.Exit();
 
             if (_states[typeof(TState)] is TState state)
             {
-                Debug.Log($"Entered: {typeof(TState).Name}");
+                Debug.Log($"Entered state: '{typeof(TState).Name}'");
                 state.Enter(args);
             }
         }

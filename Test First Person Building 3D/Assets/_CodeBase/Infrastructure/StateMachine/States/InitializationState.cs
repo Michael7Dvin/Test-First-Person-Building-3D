@@ -1,4 +1,9 @@
-﻿using _CodeBase.Infrastructure.StateMachine.States.Base;
+﻿using _CodeBase.Infrastructure.Services.SceneLoader;
+using _CodeBase.Infrastructure.StateMachine.States.Base;
+using UnityEngine.AddressableAssets;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine.Device;
 
 namespace _CodeBase.Infrastructure.StateMachine.States
 {
@@ -11,9 +16,14 @@ namespace _CodeBase.Infrastructure.StateMachine.States
             _gameStateMachine = gameStateMachine;
         }
 
-        public void Enter()
+        public async void Enter()
         {
-            _gameStateMachine.EnterState<GameplayState>();
+            await Addressables.InitializeAsync();
+            DOTween.Init();
+            
+            Application.targetFrameRate = 60;
+            
+            _gameStateMachine.EnterState<SceneLoadingState, SceneID>(SceneID.Level);
         }
 
         public void Exit()
