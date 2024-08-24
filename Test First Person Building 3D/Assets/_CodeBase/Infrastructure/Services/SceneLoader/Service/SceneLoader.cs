@@ -1,5 +1,4 @@
 ﻿using _CodeBase.Infrastructure.Services.AddressablesLoader;
-using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -13,10 +12,10 @@ namespace _CodeBase.Infrastructure.Services.SceneLoader.Service
         private readonly IAddressablesLoader _addressablesLoader;
         private readonly ScenesAddresses _scenes;
 
-        public SceneLoader(IAddressablesLoader addressablesLoader, IStaticDataProvider staticDataProvider)
+        public SceneLoader(IAddressablesLoader addressablesLoader, ScenesAddresses scenes)
         {
             _addressablesLoader = addressablesLoader;
-            _scenes = staticDataProvider.ScenesAddresses;
+            _scenes = scenes;
         }
 
         public Scene CurrentScene { get; private set; }

@@ -1,5 +1,4 @@
 ﻿using _CodeBase.Infrastructure.Services.PlayerFactory;
-using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.Infrastructure.StateMachine.States.Base;
 using _CodeBase.StaticData;
 
@@ -13,11 +12,11 @@ namespace _CodeBase.Infrastructure.StateMachine.States
 
         public WorldSpawningState(IGameStateMachine gameStateMachine,
             IPlayerFactory playerFactory,
-            IStaticDataProvider staticDataProvider)
+            RoomLevelConfig roomLevelConfig)
         {
             _gameStateMachine = gameStateMachine;
             _playerFactory = playerFactory;
-            _roomLevelConfig = staticDataProvider.RoomLevelConfig;
+            _roomLevelConfig = roomLevelConfig;
         }
 
         public async void Enter()
