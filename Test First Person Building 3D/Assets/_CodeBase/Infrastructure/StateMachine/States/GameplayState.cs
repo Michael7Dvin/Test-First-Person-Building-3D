@@ -7,9 +7,5 @@ namespace _CodeBase.Infrastructure.StateMachine.States
         public void Enter()
         {
         }
-        
-        public void Exit()
-        {
-        }
     }
 }

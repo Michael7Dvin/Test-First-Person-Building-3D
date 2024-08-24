@@ -25,9 +25,5 @@ namespace _CodeBase.Infrastructure.StateMachine.States
             
             _gameStateMachine.EnterState<SceneLoadingState, SceneID>(SceneID.Room);
         }
-
-        public void Exit()
-        {
-        }
     }
 }

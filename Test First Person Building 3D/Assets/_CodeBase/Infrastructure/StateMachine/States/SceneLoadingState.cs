@@ -18,11 +18,7 @@ namespace _CodeBase.Infrastructure.StateMachine.States
         public async void Enter(SceneID sceneID)
         {
             await _sceneLoader.Load(sceneID);
-            _gameStateMachine.EnterState<GameplayState>();
-        }
-
-        public void Exit()
-        {
+            _gameStateMachine.EnterState<WorldSpawningState>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using _CodeBase.Infrastructure.Services.AddressablesLoader;
+using _CodeBase.Infrastructure.Services.PlayerFactory;
 using _CodeBase.Infrastructure.Services.SceneLoader.Service;
 using _CodeBase.Infrastructure.Services.StaticDataProvider;
 using _CodeBase.Infrastructure.StateMachine;
@@ -37,6 +38,8 @@ namespace _CodeBase.Infrastructure.Installers
             
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+            
+            Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
         }
     }
 }
