@@ -2,7 +2,7 @@
 using _CodeBase.Infrastructure.StateMachine.States;
 using Zenject;
 
-namespace _CodeBase.Infrastructure.Bootstrapper
+namespace _CodeBase.Infrastructure.Bootstrappers
 {
     public class Bootstrapper : IInitializable
     {
@@ -10,14 +10,16 @@ namespace _CodeBase.Infrastructure.Bootstrapper
 
         public Bootstrapper(IGameStateMachine gameStateMachine,
             InitializationState initializationState,
-            GameplayState gameplayState,
-            SceneLoadingState sceneLoadingState)
+            SceneLoadingState sceneLoadingState,
+            WorldSpawningState worldSpawningState,
+            GameplayState gameplayState)
         {
             _gameStateMachine = gameStateMachine;
             
             _gameStateMachine.AddState(initializationState);
-            _gameStateMachine.AddState(gameplayState);
             _gameStateMachine.AddState(sceneLoadingState);
+            _gameStateMachine.AddState(worldSpawningState);
+            _gameStateMachine.AddState(gameplayState);
         }
 
         public void Initialize()
