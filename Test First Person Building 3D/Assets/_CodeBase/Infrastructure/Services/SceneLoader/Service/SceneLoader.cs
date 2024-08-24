@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _CodeBase.Infrastructure.Services.StaticDataProvider;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,7 +14,7 @@ namespace _CodeBase.Infrastructure.Services.SceneLoader.Service
 
         public SceneLoader(IStaticDataProvider staticDataProvider)
         {
-            _scenes = staticDataProvider.AssetsAddresses.Scenes;
+            _scenes = staticDataProvider.ScenesAddresses;
         }
 
         public Scene CurrentScene { get; private set; }
@@ -26,7 +27,7 @@ namespace _CodeBase.Infrastructure.Services.SceneLoader.Service
                     await Load(_scenes.Level);
                     break;
                 default:
-                    Debug.LogError($"Unable to Load scene. Unsupported {nameof(SceneID)}: '{id}'");
+                    Debug.LogError($"Unable to load scene. Unsupported {nameof(SceneID)}: '{id}'");
                     break;
             }    
             
