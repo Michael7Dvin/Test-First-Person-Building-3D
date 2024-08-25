@@ -1,13 +1,13 @@
 using UnityEngine;
 
-namespace _CodeBase.Gameplay.Player.CameraLook
+namespace _CodeBase.Gameplay.Player
 {
-    public class PlayerCameraLook : MonoBehaviour 
+    public class PlayerLookAround : MonoBehaviour 
     {
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _bodyTransform;
 
-        public PlayerCameraLook(Transform cameraTransform, Transform bodyTransform)
+        public PlayerLookAround(Transform cameraTransform, Transform bodyTransform)
         {
             _cameraTransform = cameraTransform;
             _bodyTransform = bodyTransform;

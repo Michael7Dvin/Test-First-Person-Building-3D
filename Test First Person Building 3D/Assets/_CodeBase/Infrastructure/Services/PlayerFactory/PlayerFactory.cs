@@ -1,5 +1,4 @@
 ﻿using _CodeBase.Gameplay.Player;
-using _CodeBase.Gameplay.Player.CameraLook;
 using _CodeBase.Infrastructure.Services.AddressablesLoader;
 using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
