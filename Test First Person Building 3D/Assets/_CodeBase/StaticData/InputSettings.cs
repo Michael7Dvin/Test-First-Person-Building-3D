@@ -3,7 +3,7 @@
 namespace _CodeBase.StaticData
 {
     [CreateAssetMenu(menuName = "StaticData/InputSettings", fileName = "InputSettings")]
-    public class PlayerInputSettings : ScriptableObject
+    public class InputSettings : ScriptableObject
     {
         [field: SerializeField] public float MouseSensitivity { get; private set; }
     }

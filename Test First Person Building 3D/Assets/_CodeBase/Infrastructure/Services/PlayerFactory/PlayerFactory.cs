@@ -1,6 +1,6 @@
 ﻿using _CodeBase.Gameplay.Player;
-using _CodeBase.Gameplay.Player.CameraLook;
 using _CodeBase.Infrastructure.Services.AddressablesLoader;
+using _CodeBase.Infrastructure.Services.InputService;
 using _CodeBase.StaticData;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -13,14 +13,17 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
         private readonly IInstantiator _instantiator;
         private readonly IAddressablesLoader _addressablesLoader;
         private readonly PrefabAddresses _prefabAddresses;
+        private readonly IInputService _inputService;
 
         public PlayerFactory(IInstantiator instantiator,
             IAddressablesLoader addressablesLoader,
-            PrefabAddresses prefabAddresses)
+            PrefabAddresses prefabAddresses,
+            IInputService inputService)
         {
             _instantiator = instantiator;
             _addressablesLoader = addressablesLoader;
             _prefabAddresses = prefabAddresses;
+            _inputService = inputService;
         }
 
         public async UniTask WarmUp() => 
@@ -30,6 +33,8 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
         {
             GameObject playerPrefab = await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
             Player player = _instantiator.InstantiatePrefabForComponent<Player>(playerPrefab, position, rotation, null);
+            player.Look.Construct(_inputService);
+            player.Mover.Construct(_inputService, 5);
         }
     }
 }
