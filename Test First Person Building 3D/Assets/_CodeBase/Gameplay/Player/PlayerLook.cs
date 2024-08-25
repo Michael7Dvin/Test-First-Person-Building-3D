@@ -1,3 +1,4 @@
+using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player
@@ -7,16 +8,22 @@ namespace _CodeBase.Gameplay.Player
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _bodyTransform;
 
-        public PlayerLook(Transform cameraTransform, Transform bodyTransform)
-        {
-            _cameraTransform = cameraTransform;
-            _bodyTransform = bodyTransform;
-        }
-
+        private IInputService _inputService;
+        
         private float _rotationX;
         private float _rotationY;
+
+        public void Construct(IInputService inputService)
+        {
+            _inputService = inputService;
+        }
+
+        private void Update()
+        {
+            Rotate(_inputService.PlayerLookRotation);
+        }
         
-        public void Rotate(Vector2 inputLookRotation)
+        private void Rotate(Vector2 inputLookRotation)
         {      
             _rotationX -= inputLookRotation.y;
             _rotationX = Mathf.Clamp(_rotationX, -90f, 90f);
