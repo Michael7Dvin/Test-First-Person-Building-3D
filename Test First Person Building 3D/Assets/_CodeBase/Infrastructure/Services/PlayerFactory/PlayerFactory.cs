@@ -33,7 +33,6 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
         {
             GameObject playerPrefab = await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
             Player player = _instantiator.InstantiatePrefabForComponent<Player>(playerPrefab, position, rotation, null);
-            
             player.Look.Construct(_inputService);
             player.Mover.Construct(_inputService, 5);
         }

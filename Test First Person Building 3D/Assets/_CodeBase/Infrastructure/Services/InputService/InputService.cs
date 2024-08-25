@@ -3,6 +3,7 @@ using _CodeBase.StaticData;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Zenject;
+using InputSettings = _CodeBase.StaticData.InputSettings;
 
 namespace _CodeBase.Infrastructure.Services.InputService
 {
@@ -11,9 +12,9 @@ namespace _CodeBase.Infrastructure.Services.InputService
         private readonly InputSystem_Actions _inputSystemActions = new();
         private readonly float _mouseSensitivity;
 
-        public InputService(PlayerInputSettings playerInputSettings)
+        public InputService(InputSettings inputSettings)
         {
-            _mouseSensitivity = playerInputSettings.MouseSensitivity;
+            _mouseSensitivity = inputSettings.MouseSensitivity;
         }
 
         public Vector2 PlayerLookRotation { get; private set; }
