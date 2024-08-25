@@ -7,8 +7,9 @@ namespace _CodeBase.Gameplay.Player
     {
         private CharacterController _characterController;
 
-        private float _moveSpeed;
-        
+        private Vector3 _inputMoveDirection;
+        private float _moveSpeed = 5f;
+
         public void Construct(float moveSpeed)
         {
             _moveSpeed = moveSpeed;
@@ -19,9 +20,14 @@ namespace _CodeBase.Gameplay.Player
             _characterController = GetComponent<CharacterController>();
         }
 
-        public void Move(Vector2 horizontalDirection)
+        public void ChangeMoveDirection(Vector3 inputMoveDirection) => 
+            _inputMoveDirection = inputMoveDirection;
+
+        public void Move()
         {
-            _characterController.Move(horizontalDirection * _moveSpeed * Time.deltaTime);
+            Vector3 cameraAlignedMoveDirection = transform.TransformDirection(_inputMoveDirection);
+            cameraAlignedMoveDirection.y = Physics.gravity.y;
+            _characterController.Move(cameraAlignedMoveDirection * (_moveSpeed * Time.deltaTime));
         }
     }
 }

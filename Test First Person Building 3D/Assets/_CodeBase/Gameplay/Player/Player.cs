@@ -4,12 +4,12 @@ using Zenject;
 
 namespace _CodeBase.Gameplay.Player
 {
-    [RequireComponent(typeof(PlayerLookAround), typeof(PlayerMover))]
+    [RequireComponent(typeof(PlayerLook), typeof(PlayerMover))]
     public class Player : MonoBehaviour
     {
         private IInputService _inputService;
         
-        private PlayerLookAround _lookAround;
+        private PlayerLook _look;
         public PlayerMover Mover { get; private set; }
 
         [Inject]
@@ -20,13 +20,21 @@ namespace _CodeBase.Gameplay.Player
 
         private void Awake()
         {
-            _lookAround = GetComponent<PlayerLookAround>();
+            _look = GetComponent<PlayerLook>();
             Mover = GetComponent<PlayerMover>();
+            
+            _inputService.PlayerMoveDirection += Mover.ChangeMoveDirection;
         }
 
         private void Update()
         {
-            _lookAround.Rotate(_inputService.PlayerCameraLook);
+            _look.Rotate(_inputService.PlayerLookRotation);
+            Mover.Move();
+        }
+
+        private void OnDestroy()
+        {
+            _inputService.PlayerMoveDirection -= Mover.ChangeMoveDirection;
         }
     }
 }

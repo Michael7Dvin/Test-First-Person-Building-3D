@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player
 {
-    public class PlayerLookAround : MonoBehaviour 
+    public class PlayerLook : MonoBehaviour 
     {
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _bodyTransform;
 
-        public PlayerLookAround(Transform cameraTransform, Transform bodyTransform)
+        public PlayerLook(Transform cameraTransform, Transform bodyTransform)
         {
             _cameraTransform = cameraTransform;
             _bodyTransform = bodyTransform;
