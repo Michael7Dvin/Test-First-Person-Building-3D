@@ -18,11 +18,9 @@ namespace _CodeBase.Gameplay.Player
             _inputService = inputService;
         }
 
-        private void Update()
-        {
+        private void Update() => 
             Rotate(_inputService.PlayerLookRotation);
-        }
-        
+
         private void Rotate(Vector2 inputLookRotation)
         {      
             _rotationX -= inputLookRotation.y;
