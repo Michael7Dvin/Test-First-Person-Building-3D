@@ -38,7 +38,6 @@ namespace _CodeBase.Gameplay.Player
             if (CurrentTarget == newTarget)
                 return;
             
-            Debug.Log($"New Target:{newTarget}");
             CurrentTarget = newTarget;
             CurrentTargetChanged?.Invoke();
         }

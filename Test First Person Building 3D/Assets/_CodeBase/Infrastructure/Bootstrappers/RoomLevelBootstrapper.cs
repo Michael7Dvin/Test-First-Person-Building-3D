@@ -4,27 +4,23 @@ using Zenject;
 
 namespace _CodeBase.Infrastructure.Bootstrappers
 {
-    public class Bootstrapper : IInitializable
+    public class RoomLevelBootstrapper : IInitializable
     {
         private readonly IGameStateMachine _gameStateMachine;
 
-        public Bootstrapper(IGameStateMachine gameStateMachine,
-            InitializationState initializationState,
-            SceneLoadingState sceneLoadingState,
+        public RoomLevelBootstrapper(IGameStateMachine gameStateMachine,
             WorldSpawningState worldSpawningState,
             GameplayState gameplayState)
         {
             _gameStateMachine = gameStateMachine;
             
-            _gameStateMachine.AddState(initializationState);
-            _gameStateMachine.AddState(sceneLoadingState);
             _gameStateMachine.AddState(worldSpawningState);
             _gameStateMachine.AddState(gameplayState);
         }
 
         public void Initialize()
         {
-            _gameStateMachine.EnterState<InitializationState>();
+            _gameStateMachine.EnterState<WorldSpawningState>();
         }
     }
 }

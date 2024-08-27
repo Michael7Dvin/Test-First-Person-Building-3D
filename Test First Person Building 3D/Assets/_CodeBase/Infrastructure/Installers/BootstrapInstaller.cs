@@ -12,7 +12,7 @@ namespace _CodeBase.Infrastructure.Installers
 
         private void BindBootstrapper()
         {
-            Container.BindInterfacesTo<Bootstrapper>().AsSingle();
+            Container.BindInterfacesTo<AppBootstrapper>().AsSingle();
         }
     }
 }

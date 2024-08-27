@@ -21,8 +21,6 @@ namespace _CodeBase.Infrastructure.Installers
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
             Container.Bind<InitializationState>().AsSingle();
             Container.Bind<SceneLoadingState>().AsSingle();
-            Container.Bind<WorldSpawningState>().AsSingle();
-            Container.Bind<GameplayState>().AsSingle();
         }
 
         private void BindServices()
@@ -30,8 +28,6 @@ namespace _CodeBase.Infrastructure.Installers
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-            
-            Container.Bind<IPlayerFactory>().To<PlayerFactory>().AsSingle();
         }
     }
 }
