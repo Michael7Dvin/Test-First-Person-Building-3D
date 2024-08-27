@@ -41,6 +41,8 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
 
             float maxRaycastRange = Mathf.Max(_playerConfig.MaxPickUpDistance, _playerConfig.MaxSnappingDistance);
             player.Raycaster.Construct(maxRaycastRange);
+            
+            player.PickUpInteraction.Construct(_inputService, _playerConfig.MaxPickUpDistance);
         }
     }
 }
