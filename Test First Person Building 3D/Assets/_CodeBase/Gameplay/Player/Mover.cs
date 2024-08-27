@@ -4,7 +4,7 @@ using UnityEngine;
 namespace _CodeBase.Gameplay.Player
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerMover : MonoBehaviour
+    public class Mover : MonoBehaviour
     {
         private CharacterController _characterController;
         private IInputService _inputService;

@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   <PlayerSpeed>k__BackingField: 5
+  <MaxPickUpDistance>k__BackingField: 3
+  <MaxSnappingDistance>k__BackingField: 3

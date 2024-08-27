@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player
 {
-    public class PlayerLook : MonoBehaviour 
+    public class LookAround : MonoBehaviour 
     {
         [SerializeField] private Transform _cameraTransform;
         [SerializeField] private Transform _bodyTransform;

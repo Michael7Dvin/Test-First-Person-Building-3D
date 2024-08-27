@@ -2,16 +2,18 @@
 
 namespace _CodeBase.Gameplay.Player
 {
-    [RequireComponent(typeof(PlayerLook), typeof(PlayerMover))]
+    [RequireComponent(typeof(LookAround), typeof(Mover), typeof(Raycaster))]
     public class Player : MonoBehaviour
     {
-        public PlayerLook Look { get; private set; }
-        public PlayerMover Mover { get; private set; }
+        public LookAround LookAround { get; private set; }
+        public Mover Mover { get; private set; }
+        public Raycaster Raycaster { get; private set; }
         
         private void Awake()
         {
-            Look = GetComponent<PlayerLook>();
-            Mover = GetComponent<PlayerMover>();
+            LookAround = GetComponent<LookAround>();
+            Mover = GetComponent<Mover>();
+            Raycaster = GetComponent<Raycaster>();
         }
     }
 }
