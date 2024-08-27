@@ -19,24 +19,24 @@ namespace _CodeBase.Gameplay.Building
             _inputService.PickUpPressed += PickUp;
         }
         
-        public void PickUp()
+        private void PickUp()
         {
             if (_raycaster.CurrentTarget == null || _raycaster.CurrentTargetDistance > _maxPickUpDistance)
                 return;
 
             if (_raycaster.CurrentTarget.TryGetComponent(out PickUpable pickUpable))
             {
-                var transform1 = pickUpable.transform;
-                
-                transform1.parent = _pickUpPoint;
-                transform1.position = new Vector3(0, 0, 0);
+                Transform pickUpableTransform = pickUpable.transform;
+
+                pickUpableTransform.parent = _pickUpPoint;
+                pickUpableTransform.localPosition = new Vector3(0, 0, 0);
+                pickUpableTransform.localRotation = Quaternion.identity;
             }
         }
 
         private void OnDestroy()
         {
             _inputService.PickUpPressed -= PickUp;
-
         }
     }
 }

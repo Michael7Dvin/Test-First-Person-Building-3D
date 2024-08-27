@@ -24,7 +24,7 @@ namespace _CodeBase.Infrastructure.Services.InputService
         {
             Cursor.lockState = CursorLockMode.Locked;
             _inputSystemActions.Enable();
-            _inputSystemActions.Player.Interact.performed += OnInteractPerformed;
+            _inputSystemActions.Player.Interact.started += OnInteractPerformed;
         }
 
         private void OnInteractPerformed(InputAction.CallbackContext _) => 
