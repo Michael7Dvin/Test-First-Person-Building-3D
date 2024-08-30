@@ -1,4 +1,5 @@
-﻿using _CodeBase.Gameplay.Player;
+﻿using _CodeBase.Gameplay.Building;
+using _CodeBase.Gameplay.Player;
 using _CodeBase.Infrastructure.Services.AddressablesLoader;
 using _CodeBase.Infrastructure.Services.InputService;
 using _CodeBase.StaticData;
@@ -15,6 +16,8 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
         private readonly PrefabAddresses _prefabAddresses;
         private readonly PlayerConfig _playerConfig;
         private readonly IInputService _inputService;
+        
+        private GameObject _playerPrefab;
 
         public PlayerFactory(IInstantiator instantiator,
             IAddressablesLoader addressablesLoader,
@@ -29,13 +32,14 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             _inputService = inputService;
         }
 
-        public async UniTask WarmUp() => 
-            await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
+        public async UniTask WarmUpAsync() => 
+            _playerPrefab = await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
 
-        public async UniTask Create(Vector3 position, Quaternion rotation)
+        public void Create(Vector3 position, Quaternion rotation)
         {
-            GameObject playerPrefab = await _addressablesLoader.LoadGameObjectAsync(_prefabAddresses.Player);
-            Player player = _instantiator.InstantiatePrefabForComponent<Player>(playerPrefab, position, rotation, null);
+            ValidateWarmUpping().Forget();
+
+            Player player = _instantiator.InstantiatePrefabForComponent<Player>(_playerPrefab, position, rotation, null);
             player.LookAround.Construct(_inputService);
             player.Mover.Construct(_inputService, _playerConfig.PlayerSpeed);
 
@@ -43,6 +47,20 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             player.Raycaster.Construct(maxRaycastRange);
             
             player.PickUpInteraction.Construct(_inputService, _playerConfig.MaxPickUpDistance);
+            
+            BuildRotator buildRotator = new BuildRotator(_inputService, _playerConfig, player.PickUpInteraction);
+            buildRotator.Initialize();
+            
+            player.Construct(buildRotator);
+        }
+        
+        private async UniTaskVoid ValidateWarmUpping()
+        {
+            if (_playerPrefab == null)
+            {
+                Debug.LogError($"{nameof(PlayerFactory)} is not warmed up. Call {nameof(WarmUpAsync)} before using factory.");
+                await WarmUpAsync();
+            }
         }
     }
 }

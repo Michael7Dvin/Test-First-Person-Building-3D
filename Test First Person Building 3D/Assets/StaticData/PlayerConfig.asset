@@ -15,3 +15,4 @@ MonoBehaviour:
   <PlayerSpeed>k__BackingField: 5
   <MaxPickUpDistance>k__BackingField: 3
   <MaxSnappingDistance>k__BackingField: 3
+  <RotationAnglePerInput>k__BackingField: 15

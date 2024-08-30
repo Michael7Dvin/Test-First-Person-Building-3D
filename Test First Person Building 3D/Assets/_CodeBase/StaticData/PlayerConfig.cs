@@ -8,5 +8,7 @@ namespace _CodeBase.StaticData
         [field: SerializeField] public float PlayerSpeed { get; private set; }
         [field: SerializeField] public float MaxPickUpDistance { get; private set; }
         [field: SerializeField] public float MaxSnappingDistance { get; private set; }
+        [field: SerializeField] public float RotationAnglePerInput { get; private set; }
+        
     }
 }

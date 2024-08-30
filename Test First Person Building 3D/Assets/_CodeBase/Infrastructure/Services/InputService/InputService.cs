@@ -19,17 +19,19 @@ namespace _CodeBase.Infrastructure.Services.InputService
         public Vector2 PlayerLookRotation { get; private set; }
         public Vector3 PlayerMoveDirection { get; private set; }
         public event Action PickUpPressed;
+        public event Action RotateTowardPerformed;
+        public event Action RotateAwayPerformed;
 
-        public void Enable()
+        public void Initialize()
         {
             Cursor.lockState = CursorLockMode.Locked;
             _inputSystemActions.Enable();
-            _inputSystemActions.Player.Interact.started += OnInteractPerformed;
+            _inputSystemActions.Player.Interact.started += OnInteractInput;
+
+            _inputSystemActions.Player.RotateAway.performed += OnRotateAwayInput;
+            _inputSystemActions.Player.RotateToward.performed += OnRotateTowardInput;
         }
-
-        private void OnInteractPerformed(InputAction.CallbackContext _) => 
-            PickUpPressed?.Invoke();
-
+        
         public void Tick()
         {
             ReadLookRotation();
@@ -47,9 +49,20 @@ namespace _CodeBase.Infrastructure.Services.InputService
             PlayerMoveDirection = new Vector3(inputDirection.x, 0f, inputDirection.y);
         }
 
+        private void OnRotateAwayInput(InputAction.CallbackContext obj) => 
+            RotateAwayPerformed?.Invoke();
+
+        private void OnRotateTowardInput(InputAction.CallbackContext obj) => 
+            RotateTowardPerformed?.Invoke();
+
+        private void OnInteractInput(InputAction.CallbackContext _) => 
+            PickUpPressed?.Invoke();
+        
         public void Dispose()
         {
-            _inputSystemActions.Player.Interact.performed -= OnInteractPerformed;
+            _inputSystemActions.Player.Interact.performed -= OnInteractInput;
+            _inputSystemActions.Player.RotateAway.performed -= OnRotateAwayInput;
+            _inputSystemActions.Player.RotateToward.performed -= OnRotateTowardInput;
             _inputSystemActions?.Dispose();
         }
     }

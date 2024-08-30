@@ -54,6 +54,24 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Away"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd84f69d-fdf1-4337-90e1-7aea0038000a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate Toward"",
+                    ""type"": ""Button"",
+                    ""id"": ""8f682c79-6912-4715-a644-96ff86aeb97c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -175,6 +193,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e19b4a25-994c-45e0-9959-744ebcbd32c8"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Away"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""286cbd84-6d29-40bb-85a3-5057a13e7c22"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Toward"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -765,6 +805,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_RotateAway = m_Player.FindAction("Rotate Away", throwIfNotFound: true);
+        m_Player_RotateToward = m_Player.FindAction("Rotate Toward", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -847,6 +889,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_RotateAway;
+    private readonly InputAction m_Player_RotateToward;
     public struct PlayerActions
     {
         private @InputSystem_Actions m_Wrapper;
@@ -854,6 +898,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @RotateAway => m_Wrapper.m_Player_RotateAway;
+        public InputAction @RotateToward => m_Wrapper.m_Player_RotateToward;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -872,6 +918,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @RotateAway.started += instance.OnRotateAway;
+            @RotateAway.performed += instance.OnRotateAway;
+            @RotateAway.canceled += instance.OnRotateAway;
+            @RotateToward.started += instance.OnRotateToward;
+            @RotateToward.performed += instance.OnRotateToward;
+            @RotateToward.canceled += instance.OnRotateToward;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -885,6 +937,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @RotateAway.started -= instance.OnRotateAway;
+            @RotateAway.performed -= instance.OnRotateAway;
+            @RotateAway.canceled -= instance.OnRotateAway;
+            @RotateToward.started -= instance.OnRotateToward;
+            @RotateToward.performed -= instance.OnRotateToward;
+            @RotateToward.canceled -= instance.OnRotateToward;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1070,6 +1128,8 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnRotateAway(InputAction.CallbackContext context);
+        void OnRotateToward(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

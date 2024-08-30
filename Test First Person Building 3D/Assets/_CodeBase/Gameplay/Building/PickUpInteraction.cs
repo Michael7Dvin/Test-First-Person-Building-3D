@@ -19,6 +19,8 @@ namespace _CodeBase.Gameplay.Building
             _inputService.PickUpPressed += PickUp;
         }
         
+        public PickUpable CurrentPickUpable { get; private set;}
+        
         private void PickUp()
         {
             if (_raycaster.CurrentTarget == null || _raycaster.CurrentTargetDistance > _maxPickUpDistance)
@@ -31,6 +33,7 @@ namespace _CodeBase.Gameplay.Building
                 pickUpableTransform.parent = _pickUpPoint;
                 pickUpableTransform.localPosition = new Vector3(0, 0, 0);
                 pickUpableTransform.localRotation = Quaternion.identity;
+                CurrentPickUpable = pickUpable;
             }
         }
 

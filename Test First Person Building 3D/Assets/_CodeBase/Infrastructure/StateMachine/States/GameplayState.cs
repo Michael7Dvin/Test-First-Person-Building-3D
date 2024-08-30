@@ -14,7 +14,7 @@ namespace _CodeBase.Infrastructure.StateMachine.States
 
         public void Enter()
         {
-            _inputService.Enable();
+            _inputService.Initialize();
         }
     }
 }
