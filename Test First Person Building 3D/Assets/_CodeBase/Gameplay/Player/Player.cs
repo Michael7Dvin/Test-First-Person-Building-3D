@@ -1,5 +1,5 @@
-﻿using System;
-using _CodeBase.Gameplay.Building;
+﻿using _CodeBase.Gameplay.Building;
+using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player
@@ -9,11 +9,26 @@ namespace _CodeBase.Gameplay.Player
     public class Player : MonoBehaviour
     {
         private BuildRotator _buildRotator;
+        private BuildSnapping _buildSnapping;
+        private IInputService _inputService;
+
+        public void Construct(IInputService inputService, BuildRotator buildRotator, BuildSnapping buildSnapping)
+        {
+            _inputService = inputService;
+            _buildRotator = buildRotator;
+            _buildSnapping = buildSnapping;
+            
+            _inputService.RotateAwayPerformed += _buildRotator.RotateAway;
+            _inputService.RotateTowardPerformed += _buildRotator.RotateTowards;
+            
+            Raycaster.CurrentTargetChanged += _buildSnapping.OnRaycasterTargetChanged;
+        }
         
         public LookAround LookAround { get; private set; }
         public Mover Mover { get; private set; }
         public Raycaster Raycaster { get; private set; }
         public PickUpInteraction PickUpInteraction { get; private set; }
+        
 
         private void Awake()
         {
@@ -24,14 +39,17 @@ namespace _CodeBase.Gameplay.Player
             PickUpInteraction = GetComponent<PickUpInteraction>();
         }
 
-        public void Construct(BuildRotator buildRotator)
+        private void Update()
         {
-            _buildRotator = buildRotator;
+            _buildSnapping.Update();
         }
 
         private void OnDestroy()
         {
-            _buildRotator.Dispose();
+            _inputService.RotateAwayPerformed -= _buildRotator.RotateAway;
+            _inputService.RotateTowardPerformed -= _buildRotator.RotateTowards;
+            
+            Raycaster.CurrentTargetChanged -= _buildSnapping.OnRaycasterTargetChanged;
         }
     }
 }

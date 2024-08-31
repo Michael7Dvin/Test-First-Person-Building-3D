@@ -48,10 +48,10 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             
             player.PickUpInteraction.Construct(_inputService, _playerConfig.MaxPickUpDistance);
             
-            BuildRotator buildRotator = new BuildRotator(_inputService, _playerConfig, player.PickUpInteraction);
-            buildRotator.Initialize();
+            BuildRotator buildRotator = new(_playerConfig, player.PickUpInteraction);
+            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction);
             
-            player.Construct(buildRotator);
+            player.Construct(_inputService, buildRotator, buildSnapping);
         }
         
         private async UniTaskVoid ValidateWarmUpping()

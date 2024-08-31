@@ -15,8 +15,12 @@ namespace _CodeBase.Gameplay.Player
             _raycastRange = raycastRange;
         }
 
-        public Transform CurrentTarget { get; private set;}
-        public float CurrentTargetDistance { get; private set; }
+        public Transform Target { get; private set;}
+        public RaycastHit Hit { get; private set; }
+        
+        public float TargetDistance => Hit.distance;
+        public Vector3 HitPoint => Hit.point;
+        public Vector3 HitNormal => Hit.normal;
         
         public event Action CurrentTargetChanged;
         
@@ -26,7 +30,7 @@ namespace _CodeBase.Gameplay.Player
 
             if (Physics.Raycast(ray, out RaycastHit hit, _raycastRange, _mask))
             {
-                CurrentTargetDistance = hit.distance;
+                Hit = hit;
                 SetCurrentTarget(hit.transform);
             }
             else
@@ -35,10 +39,10 @@ namespace _CodeBase.Gameplay.Player
 
         private void SetCurrentTarget(Transform newTarget)
         {
-            if (CurrentTarget == newTarget)
+            if (Target == newTarget)
                 return;
             
-            CurrentTarget = newTarget;
+            Target = newTarget;
             CurrentTargetChanged?.Invoke();
         }
     }

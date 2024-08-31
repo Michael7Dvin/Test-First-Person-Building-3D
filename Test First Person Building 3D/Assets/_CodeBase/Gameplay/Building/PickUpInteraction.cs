@@ -23,16 +23,17 @@ namespace _CodeBase.Gameplay.Building
         
         private void PickUp()
         {
-            if (_raycaster.CurrentTarget == null || _raycaster.CurrentTargetDistance > _maxPickUpDistance)
+            if (_raycaster.Target == null || _raycaster.TargetDistance > _maxPickUpDistance)
                 return;
 
-            if (_raycaster.CurrentTarget.TryGetComponent(out PickUpable pickUpable))
+            if (_raycaster.Target.TryGetComponent(out PickUpable pickUpable))
             {
                 Transform pickUpableTransform = pickUpable.transform;
 
                 pickUpableTransform.parent = _pickUpPoint;
                 pickUpableTransform.localPosition = new Vector3(0, 0, 0);
                 pickUpableTransform.localRotation = Quaternion.identity;
+                pickUpable.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 CurrentPickUpable = pickUpable;
             }
         }
