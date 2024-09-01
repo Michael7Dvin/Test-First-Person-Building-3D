@@ -10,5 +10,8 @@ namespace _CodeBase.StaticData
         [field: SerializeField] public float MaxSnappingDistance { get; private set; }
         [field: SerializeField] public float RotationAnglePerInput { get; private set; }
         
+        [field: SerializeField] public Material ValidPlacementMaterial { get; private set; }
+        [field: SerializeField] public Material InvalidPlacementMaterial { get; private set; }
+        [field: SerializeField] public float BuildMaterialTransparency { get; private set; }
     }
 }

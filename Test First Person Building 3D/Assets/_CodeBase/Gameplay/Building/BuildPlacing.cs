@@ -1,14 +1,18 @@
-﻿using UnityEngine;
-
-namespace _CodeBase.Gameplay.Building
+﻿namespace _CodeBase.Gameplay.Building
 {
     public class BuildPlacing
     {
         private readonly PickUpInteraction _pickUpInteraction;
+        private readonly BuildPlacementValidator _buildPlacementValidator;
+        private readonly BuildMaterialChanger _buildMaterialChanger;
 
-        public BuildPlacing(PickUpInteraction pickUpInteraction)
+        public BuildPlacing(PickUpInteraction pickUpInteraction,
+            BuildPlacementValidator buildPlacementValidator,
+            BuildMaterialChanger buildMaterialChanger)
         {
             _pickUpInteraction = pickUpInteraction;
+            _buildPlacementValidator = buildPlacementValidator;
+            _buildMaterialChanger = buildMaterialChanger;
         }
         
         public void Place()
@@ -16,38 +20,11 @@ namespace _CodeBase.Gameplay.Building
             if (_pickUpInteraction.CurrentPickUpable == null)
                 return;
 
-            if (CheckBounds() == true)
+            if (_buildPlacementValidator.CanPlace() == true)
             {
+                _buildMaterialChanger.RestoreOriginalMaterial();
                 _pickUpInteraction.LetGo();
             }
-        }
-
-        private bool CheckBounds()
-        {
-            if (_pickUpInteraction.CurrentPickUpable == null)
-                return false;
-
-            Collider objectCollider = _pickUpInteraction.CurrentPickUpable.GetComponent<Collider>();
-            if (objectCollider == null)
-                return false;
-
-            Vector3 adjustedExtents = objectCollider.bounds.extents * 0.99f;
-            
-            Collider[] overlappingColliders = Physics.OverlapBox(
-                objectCollider.bounds.center,
-                adjustedExtents,
-                objectCollider.transform.rotation
-            );
-
-            foreach (var collider in overlappingColliders)
-            {
-                if (collider.gameObject != _pickUpInteraction.CurrentPickUpable.gameObject)
-                {
-                    return false; 
-                }
-            }
-
-            return true;
         }
     }
 }

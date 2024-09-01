@@ -13,14 +13,23 @@ namespace _CodeBase.Gameplay.Player
         private BuildRotator _buildRotator;
         private BuildSnapping _buildSnapping;
         private BuildPlacing _buildPlacing;
+        private BuildPlacementValidator _buildPlacementValidator;
+        private BuildMaterialChanger _buildMaterialChanger;
         private IInputService _inputService;
 
-        public void Construct(IInputService inputService, BuildRotator buildRotator, BuildSnapping buildSnapping, BuildPlacing buildPlacing)
+        public void Construct(IInputService inputService,
+            BuildRotator buildRotator,
+            BuildSnapping buildSnapping,
+            BuildPlacing buildPlacing,
+            BuildPlacementValidator buildPlacementValidator,
+            BuildMaterialChanger buildMaterialChanger)
         {
             _inputService = inputService;
             _buildRotator = buildRotator;
             _buildSnapping = buildSnapping;
             _buildPlacing = buildPlacing;
+            _buildPlacementValidator = buildPlacementValidator;
+            _buildMaterialChanger = buildMaterialChanger;
             
             _inputService.RotateAwayPerformed += _buildRotator.RotateAway;
             _inputService.RotateTowardPerformed += _buildRotator.RotateTowards;
@@ -28,6 +37,13 @@ namespace _CodeBase.Gameplay.Player
             _inputService.PickUpPressed += OnInteractionInput;
             
             Raycaster.CurrentTargetChanged += _buildSnapping.OnRaycasterTargetChanged;
+
+            PickUpInteraction.CurrentPickUpableChanged += OnCurrentPickUpableChanged;
+        }
+
+        private void OnCurrentPickUpableChanged(PickUpable obj)
+        {
+            _buildMaterialChanger.SetPickUpable(obj);
         }
 
         private void OnInteractionInput()
@@ -53,6 +69,7 @@ namespace _CodeBase.Gameplay.Player
         private void Update()
         {
             _buildSnapping.Update();
+            _buildMaterialChanger.Update();
         }
 
         private void OnDestroy()

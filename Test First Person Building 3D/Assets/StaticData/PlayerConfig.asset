@@ -16,3 +16,6 @@ MonoBehaviour:
   <MaxPickUpDistance>k__BackingField: 3
   <MaxSnappingDistance>k__BackingField: 3
   <RotationAnglePerInput>k__BackingField: 15
+  <ValidPlacementMaterial>k__BackingField: {fileID: 2100000, guid: 20a62caed05ff5e4aaafa730702facf9, type: 2}
+  <InvalidPlacementMaterial>k__BackingField: {fileID: 2100000, guid: 89c0ad2492d3b794481950f0a1e550dd, type: 2}
+  <BuildMaterialTransparency>k__BackingField: 1

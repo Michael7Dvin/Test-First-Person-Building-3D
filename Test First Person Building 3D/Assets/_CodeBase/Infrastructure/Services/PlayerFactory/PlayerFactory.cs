@@ -50,8 +50,11 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             
             BuildRotator buildRotator = new(_playerConfig, player.PickUpInteraction);
             BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, buildRotator, player.Camera.transform);
-            BuildPlacing buildPlacing = new BuildPlacing(player.PickUpInteraction);
-            player.Construct(_inputService, buildRotator, buildSnapping, buildPlacing);
+            BuildPlacementValidator buildPlacementValidator = new (player.PickUpInteraction);
+            BuildMaterialChanger buildMaterialChanger = 
+                new (buildPlacementValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);
+            BuildPlacing buildPlacing = new BuildPlacing(player.PickUpInteraction, buildPlacementValidator, buildMaterialChanger);
+            player.Construct(_inputService, buildRotator, buildSnapping, buildPlacing, buildPlacementValidator, buildMaterialChanger);
         }
         
         private async UniTaskVoid ValidateWarmUpping()
