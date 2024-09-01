@@ -25,7 +25,10 @@ namespace _CodeBase.Gameplay.Building
             if (_pickUpInteraction.CurrentPickUpable.AllowedBuildZoneType == _currentBuildZone.BuildZoneType)
             {
                 _pickUpInteraction.CurrentPickUpable.transform.position = _raycaster.HitPoint;
-                _pickUpInteraction.CurrentPickUpable.transform.rotation = Quaternion.LookRotation(_raycaster.HitNormal);
+
+                Quaternion alignedRotation = Quaternion.LookRotation(_raycaster.HitNormal);
+
+                _pickUpInteraction.CurrentPickUpable.transform.rotation = alignedRotation;
             }
         }
         
