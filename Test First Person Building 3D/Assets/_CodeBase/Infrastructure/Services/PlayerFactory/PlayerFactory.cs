@@ -49,7 +49,7 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             player.PickUpInteraction.Construct(_playerConfig.MaxPickUpDistance);
             
             BuildRotator buildRotator = new(_playerConfig, player.PickUpInteraction);
-            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, buildRotator, player.Camera.transform);
+            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, buildRotator, player.Camera.transform, player.PickUpPoint);
             BuildPlacementValidator buildPlacementValidator = new (player.PickUpInteraction);
             BuildMaterialChanger buildMaterialChanger = 
                 new (buildPlacementValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);

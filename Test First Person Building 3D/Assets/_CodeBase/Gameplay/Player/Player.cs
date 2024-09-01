@@ -9,6 +9,7 @@ namespace _CodeBase.Gameplay.Player
     public class Player : MonoBehaviour
     {
         [field: SerializeField] public Camera Camera { get; private set; }
+        [field: SerializeField] public Transform PickUpPoint { get; private set; }
         
         private BuildRotator _buildRotator;
         private BuildSnapping _buildSnapping;
@@ -48,8 +49,14 @@ namespace _CodeBase.Gameplay.Player
 
         private void OnInteractionInput()
         {
-            PickUpInteraction.PickUp();
-            _buildPlacing.Place();
+            if (PickUpInteraction.CurrentPickUpable == null)
+            {
+                PickUpInteraction.PickUp();
+            }
+            else
+            {
+                _buildPlacing.Place();
+            }
         }
 
         public LookAround LookAround { get; private set; }

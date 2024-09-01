@@ -6,7 +6,6 @@ namespace _CodeBase.Gameplay.Building
 {
     public class PickUpInteraction : MonoBehaviour
     {
-        [SerializeField] private Transform _pickUpPoint;
         [SerializeField] private Raycaster _raycaster;
         
         private float _maxPickUpDistance;
@@ -29,13 +28,7 @@ namespace _CodeBase.Gameplay.Building
 
             if (_raycaster.Target.TryGetComponent(out PickUpable pickUpable))
             {
-                Transform pickUpableTransform = pickUpable.transform;
-
                 _currentPickUpableOriginalLayer = pickUpable.gameObject.layer;
-                
-                pickUpableTransform.parent = _pickUpPoint;
-                pickUpableTransform.localPosition = new Vector3(0, 0, 0);
-                pickUpableTransform.localRotation = Quaternion.identity;
                 pickUpable.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 CurrentPickUpable = pickUpable;
                 CurrentPickUpableChanged?.Invoke(pickUpable);
@@ -47,7 +40,6 @@ namespace _CodeBase.Gameplay.Building
             if (CurrentPickUpable == null)
                 return;
             
-            CurrentPickUpable.transform.parent = null;
             CurrentPickUpable.gameObject.layer = _currentPickUpableOriginalLayer;
             CurrentPickUpable = null;
             CurrentPickUpableChanged?.Invoke(null);
