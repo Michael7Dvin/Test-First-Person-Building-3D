@@ -49,7 +49,7 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             player.PickUpInteraction.Construct(_inputService, _playerConfig.MaxPickUpDistance);
             
             BuildRotator buildRotator = new(_playerConfig, player.PickUpInteraction);
-            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, player.Camera.transform);
+            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, buildRotator, player.Camera.transform);
             
             player.Construct(_inputService, buildRotator, buildSnapping);
         }

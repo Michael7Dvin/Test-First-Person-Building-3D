@@ -7,16 +7,20 @@ namespace _CodeBase.Gameplay.Building
     {
         private readonly Raycaster _raycaster;
         private readonly PickUpInteraction _pickUpInteraction;
+        private readonly BuildRotator _buildRotator;
         private readonly Transform _cameraTransform;
-
         
         private bool _isBuildZoneTargeted;
         private BuildZone _currentBuildZone;
 
-        public BuildSnapping(Raycaster raycaster, PickUpInteraction pickUpInteraction, Transform cameraTransform)
+        public BuildSnapping(Raycaster raycaster,
+            PickUpInteraction pickUpInteraction,
+            BuildRotator buildRotator,
+            Transform cameraTransform)
         {
             _raycaster = raycaster;
             _pickUpInteraction = pickUpInteraction;
+            _buildRotator = buildRotator;
             _cameraTransform = cameraTransform;
         }
 
@@ -45,7 +49,8 @@ namespace _CodeBase.Gameplay.Building
 
                 Vector3 euler = _pickUpInteraction.CurrentPickUpable.transform.rotation.eulerAngles;
                 euler.y = lookAtCameraRotation.eulerAngles.y;
-
+                euler.y += _buildRotator.CurrentRotationOffset;
+                
                 _pickUpInteraction.CurrentPickUpable.transform.rotation = Quaternion.Euler(euler);
             }
         }

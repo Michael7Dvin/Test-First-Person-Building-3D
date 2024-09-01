@@ -12,14 +12,23 @@ namespace _CodeBase.Gameplay.Building
         {
             _playerConfig = playerConfig;
             _pickUpInteraction = pickUpInteraction;
+
+            _pickUpInteraction.CurrentPickUpableChanged += ResetRotation;
+        }
+
+        public float CurrentRotationOffset { get; private set; }
+        
+        private void ResetRotation(PickUpable pickUpable)
+        {
+            CurrentRotationOffset = 0;
         }
 
         public void RotateAway()
         {
             if (_pickUpInteraction.CurrentPickUpable == null)
                 return;
-            
-            _pickUpInteraction.CurrentPickUpable.transform.Rotate(Vector3.up, -_playerConfig.RotationAnglePerInput);
+
+            CurrentRotationOffset -= _playerConfig.RotationAnglePerInput;
         }
 
         public  void RotateTowards()
@@ -27,7 +36,7 @@ namespace _CodeBase.Gameplay.Building
             if (_pickUpInteraction.CurrentPickUpable == null)
                 return;
             
-            _pickUpInteraction.CurrentPickUpable.transform.Rotate(Vector3.up, _playerConfig.RotationAnglePerInput);
+            CurrentRotationOffset += _playerConfig.RotationAnglePerInput;
         }
     }
 }

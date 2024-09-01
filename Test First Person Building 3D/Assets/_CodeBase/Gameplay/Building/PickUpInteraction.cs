@@ -1,4 +1,5 @@
-﻿using _CodeBase.Gameplay.Player;
+﻿using System;
+using _CodeBase.Gameplay.Player;
 using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace _CodeBase.Gameplay.Building
         
         public PickUpable CurrentPickUpable { get; private set;}
         
+        public event Action<PickUpable> CurrentPickUpableChanged; 
+
         private void PickUp()
         {
             if (_raycaster.Target == null || _raycaster.TargetDistance > _maxPickUpDistance)
@@ -35,6 +38,7 @@ namespace _CodeBase.Gameplay.Building
                 pickUpableTransform.localRotation = Quaternion.identity;
                 pickUpable.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 CurrentPickUpable = pickUpable;
+                CurrentPickUpableChanged?.Invoke(pickUpable);
             }
         }
 
