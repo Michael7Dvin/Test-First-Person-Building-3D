@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2991bcac318049689b5b27c4d81758ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Camera>k__BackingField: {fileID: 2461246401858548528}
 --- !u!114 &5157798310703252640
 MonoBehaviour:
   m_ObjectHideFlags: 0

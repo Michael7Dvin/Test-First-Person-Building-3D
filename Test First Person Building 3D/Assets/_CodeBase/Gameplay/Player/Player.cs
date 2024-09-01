@@ -8,6 +8,8 @@ namespace _CodeBase.Gameplay.Player
     [RequireComponent(typeof(PickUpInteraction))]
     public class Player : MonoBehaviour
     {
+        [field: SerializeField] public Camera Camera { get; private set; }
+        
         private BuildRotator _buildRotator;
         private BuildSnapping _buildSnapping;
         private IInputService _inputService;
@@ -29,7 +31,6 @@ namespace _CodeBase.Gameplay.Player
         public Raycaster Raycaster { get; private set; }
         public PickUpInteraction PickUpInteraction { get; private set; }
         
-
         private void Awake()
         {
             LookAround = GetComponent<LookAround>();
