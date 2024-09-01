@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5678367622511016084}
   - component: {fileID: -9194928259577930467}
   - component: {fileID: 3715358167802139925}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Long Painting
   m_TagString: Untagged
   m_Icon: {fileID: 0}

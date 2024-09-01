@@ -1,6 +1,5 @@
 ﻿using System;
 using _CodeBase.Gameplay.Player;
-using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
 namespace _CodeBase.Gameplay.Building
@@ -10,21 +9,20 @@ namespace _CodeBase.Gameplay.Building
         [SerializeField] private Transform _pickUpPoint;
         [SerializeField] private Raycaster _raycaster;
         
-        private IInputService _inputService;
         private float _maxPickUpDistance;
 
-        public void Construct(IInputService inputService, float maxPickUpDistance)
+        private int _currentPickUpableOriginalLayer;
+        
+        public void Construct(float maxPickUpDistance)
         {
-            _inputService = inputService;
             _maxPickUpDistance = maxPickUpDistance;
-            _inputService.PickUpPressed += PickUp;
         }
         
         public PickUpable CurrentPickUpable { get; private set;}
         
         public event Action<PickUpable> CurrentPickUpableChanged; 
 
-        private void PickUp()
+        public void PickUp()
         {
             if (_raycaster.Target == null || _raycaster.TargetDistance > _maxPickUpDistance)
                 return;
@@ -33,6 +31,8 @@ namespace _CodeBase.Gameplay.Building
             {
                 Transform pickUpableTransform = pickUpable.transform;
 
+                _currentPickUpableOriginalLayer = pickUpable.gameObject.layer;
+                
                 pickUpableTransform.parent = _pickUpPoint;
                 pickUpableTransform.localPosition = new Vector3(0, 0, 0);
                 pickUpableTransform.localRotation = Quaternion.identity;
@@ -42,9 +42,15 @@ namespace _CodeBase.Gameplay.Building
             }
         }
 
-        private void OnDestroy()
+        public void LetGo()
         {
-            _inputService.PickUpPressed -= PickUp;
+            if (CurrentPickUpable == null)
+                return;
+            
+            CurrentPickUpable.transform.parent = null;
+            CurrentPickUpable.gameObject.layer = _currentPickUpableOriginalLayer;
+            CurrentPickUpable = null;
+            CurrentPickUpableChanged?.Invoke(null);
         }
     }
 }

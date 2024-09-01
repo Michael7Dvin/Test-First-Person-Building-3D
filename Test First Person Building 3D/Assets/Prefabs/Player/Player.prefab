@@ -141,7 +141,7 @@ MonoBehaviour:
   _camera: {fileID: 2461246401858548528}
   _mask:
     serializedVersion: 2
-    m_Bits: 51
+    m_Bits: 384
 --- !u!114 &1196822953477715878
 MonoBehaviour:
   m_ObjectHideFlags: 0

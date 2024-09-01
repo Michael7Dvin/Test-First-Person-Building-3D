@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1873730092368500146}
   - component: {fileID: 2580801269893214649}
   - component: {fileID: 6646502641372687229}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Small Painting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
