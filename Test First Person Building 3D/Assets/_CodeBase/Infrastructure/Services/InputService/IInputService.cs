@@ -8,9 +8,9 @@ namespace _CodeBase.Infrastructure.Services.InputService
         Vector2 PlayerLookRotation { get; }
         Vector3 PlayerMoveDirection { get; }
 
-        event Action PickUpPressed;
-        event Action RotateTowardPerformed;
-        event Action RotateAwayPerformed;
+        event Action Interaction;
+        event Action RotateToward;
+        event Action RotateAway;
         
         void Initialize();
     }

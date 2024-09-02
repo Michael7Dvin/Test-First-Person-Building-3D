@@ -18,9 +18,9 @@ namespace _CodeBase.Infrastructure.Services.InputService
 
         public Vector2 PlayerLookRotation { get; private set; }
         public Vector3 PlayerMoveDirection { get; private set; }
-        public event Action PickUpPressed;
-        public event Action RotateTowardPerformed;
-        public event Action RotateAwayPerformed;
+        public event Action Interaction;
+        public event Action RotateToward;
+        public event Action RotateAway;
 
         public void Initialize()
         {
@@ -50,13 +50,13 @@ namespace _CodeBase.Infrastructure.Services.InputService
         }
 
         private void OnRotateAwayInput(InputAction.CallbackContext obj) => 
-            RotateAwayPerformed?.Invoke();
+            RotateAway?.Invoke();
 
         private void OnRotateTowardInput(InputAction.CallbackContext obj) => 
-            RotateTowardPerformed?.Invoke();
+            RotateToward?.Invoke();
 
         private void OnInteractInput(InputAction.CallbackContext _) => 
-            PickUpPressed?.Invoke();
+            Interaction?.Invoke();
         
         public void Dispose()
         {

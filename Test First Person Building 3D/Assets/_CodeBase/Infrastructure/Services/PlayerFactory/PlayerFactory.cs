@@ -43,20 +43,39 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             player.LookAround.Construct(_inputService);
             player.Mover.Construct(_inputService, _playerConfig.PlayerSpeed);
 
+            ConstructRaycaster(player);
+
+            ConstructPlayerBuilding(player);
+        }
+
+        private void ConstructRaycaster(Player player)
+        {
             float maxRaycastRange = Mathf.Max(_playerConfig.MaxPickUpDistance, _playerConfig.MaxSnappingDistance);
             player.Raycaster.Construct(maxRaycastRange);
-            
-            BuildPickUp buildPickUp = new (player.Raycaster, _playerConfig.MaxPickUpDistance);
-            BuildRotator buildRotator = new(_playerConfig, buildPickUp);
-            BuildSnapping buildSnapping = new(player.Raycaster, buildPickUp, buildRotator, player.Camera.transform, player.PickUpPoint);
-            BuildValidator buildValidator = new (buildPickUp, buildSnapping);
-            BuildMaterialChanger buildMaterialChanger = 
-                new (buildPickUp, buildValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);
-            BuildPlacer buildPlacer = new BuildPlacer(buildPickUp, buildValidator, buildMaterialChanger);
-            
-            player.Construct(_inputService, buildRotator, buildSnapping, buildPlacer, buildValidator, buildMaterialChanger, buildPickUp);
         }
-        
+
+        private void ConstructPlayerBuilding(Player player)
+        {
+            BuildPickUp buildPickUp = new(player.Raycaster, _playerConfig.MaxPickUpDistance);
+            BuildRotator buildRotator = new(_playerConfig, buildPickUp);
+            
+            BuildSnapping buildSnapping = 
+                new(player.Raycaster, buildPickUp, buildRotator, player.Camera.transform, player.PickUpPoint);
+            
+            BuildValidator buildValidator = new(buildPickUp, buildSnapping);
+            
+            BuildMaterialChanger buildMaterialChanger = 
+                new(buildPickUp, buildValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);
+            
+            BuildPlacer buildPlacer = new(buildPickUp, buildValidator, buildMaterialChanger);
+
+            player.PlayerBuilding.Construct(_inputService, player.Raycaster, buildRotator, buildSnapping, buildPlacer,
+                buildValidator, buildMaterialChanger, buildPickUp);
+            
+            player.PlayerBuilding.Initialize();
+        }
+
+
         private async UniTaskVoid ValidateWarmUpping()
         {
             if (_playerPrefab == null)
