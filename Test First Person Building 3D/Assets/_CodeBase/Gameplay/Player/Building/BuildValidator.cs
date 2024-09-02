@@ -10,6 +10,9 @@ namespace _CodeBase.Gameplay.Player.Building
         private readonly BuildSnapping _buildSnapping;
         
         private readonly Collider[] _nonAllocOverlappingColliders = new Collider[OverlapResultsBufferSize];
+        private Bounds _currentBounds;
+        private Quaternion _currentRotation;
+
         public BuildValidator(BuildPickUp buildPickUp, BuildSnapping buildSnapping)
         {
             _buildPickUp = buildPickUp;
@@ -26,17 +29,22 @@ namespace _CodeBase.Gameplay.Player.Building
             Bounds bounds = buildableCollider.bounds;
             Vector3 adjustedExtents = bounds.extents * 0.99f;
 
+            Quaternion colliderRotation = buildableCollider.transform.rotation;
+            
+            _currentBounds = bounds;
+            _currentRotation = colliderRotation;
+            
             int collidersCount = Physics.OverlapBoxNonAlloc(bounds.center,
                 adjustedExtents,
                 _nonAllocOverlappingColliders,
-                buildableCollider.transform.rotation);
+                colliderRotation);
 
             if (IsBufferLimitReached(collidersCount))
             {
                 Collider[] allocOverlappingColliders = Physics.OverlapBox(
                     bounds.center,
                     adjustedExtents,
-                    buildableCollider.transform.rotation
+                    colliderRotation
                 );
 
                 return AreOverlapsValid(allocOverlappingColliders, allocOverlappingColliders.Length);
@@ -63,11 +71,22 @@ namespace _CodeBase.Gameplay.Player.Building
                     continue;
                 }
 
-                Debug.Log(collider.gameObject.name);
                 return false;
             }
 
             return true;
+        }
+
+        public void OnDrawGizmos()
+        {
+            if (_buildPickUp == null || _buildPickUp.ActiveBuildable == null)
+                return;
+
+            Debug.Log(_currentRotation);
+            
+            Gizmos.color = Color.green;
+            Gizmos.matrix = Matrix4x4.TRS(_currentBounds.center, _currentRotation, Vector3.one);
+            Gizmos.DrawWireCube(Vector3.zero, _currentBounds.size);
         }
     }
 }

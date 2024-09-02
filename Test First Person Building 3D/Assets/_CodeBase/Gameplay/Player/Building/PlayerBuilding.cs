@@ -1,4 +1,5 @@
-﻿using _CodeBase.Infrastructure.Services.InputService;
+﻿using System;
+using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
 namespace _CodeBase.Gameplay.Player.Building
@@ -71,6 +72,11 @@ namespace _CodeBase.Gameplay.Player.Building
                 _buildPickUp.PickUp();
             else
                 _buildPlacer.Place();
+        }
+
+        private void OnDrawGizmos()
+        {
+            _buildValidator.OnDrawGizmos();
         }
     }
 }
