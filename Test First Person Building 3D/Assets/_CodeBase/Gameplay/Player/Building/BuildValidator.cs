@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace _CodeBase.Gameplay.Building
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildValidator
     {
@@ -18,7 +18,7 @@ namespace _CodeBase.Gameplay.Building
 
         public bool CanPlace()
         {
-            if (_buildPickUp.HaveActiveBuildable == false || _buildSnapping.IsBuildZoneTargeted == false)
+            if (_buildPickUp.HaveActiveBuildable == false || _buildSnapping.IsBuildableSnapping == false)
                 return false;
 
             Collider buildableCollider = _buildPickUp.ActiveBuildable.Collider;
@@ -63,6 +63,7 @@ namespace _CodeBase.Gameplay.Building
                     continue;
                 }
 
+                Debug.Log(collider.gameObject.name);
                 return false;
             }
 

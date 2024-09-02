@@ -1,4 +1,4 @@
-﻿namespace _CodeBase.Gameplay.Building
+﻿namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildPlacer
     {

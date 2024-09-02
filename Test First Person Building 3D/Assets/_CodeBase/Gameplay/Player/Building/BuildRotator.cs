@@ -1,6 +1,7 @@
-﻿using _CodeBase.StaticData;
+﻿using _CodeBase.Gameplay.Building;
+using _CodeBase.StaticData;
 
-namespace _CodeBase.Gameplay.Building
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildRotator
     {

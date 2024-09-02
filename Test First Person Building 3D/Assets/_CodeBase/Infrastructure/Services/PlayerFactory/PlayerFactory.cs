@@ -1,5 +1,6 @@
 ﻿using _CodeBase.Gameplay.Building;
 using _CodeBase.Gameplay.Player;
+using _CodeBase.Gameplay.Player.Building;
 using _CodeBase.Infrastructure.Services.AddressablesLoader;
 using _CodeBase.Infrastructure.Services.InputService;
 using _CodeBase.StaticData;

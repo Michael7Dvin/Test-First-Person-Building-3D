@@ -43,6 +43,12 @@ namespace _CodeBase.Gameplay.Player
             }
         }
 
+        public void ExcludeLayer(int excludeLayer) => 
+            _mask &= ~(1 << excludeLayer);
+
+        public void IncludeLayer(int includeLayer) => 
+            _mask |= (1 << includeLayer);
+
         private void SetCurrentTarget(Transform newTarget)
         {
             if (Target == newTarget)

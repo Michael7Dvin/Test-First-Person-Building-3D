@@ -1,7 +1,7 @@
-﻿using _CodeBase.Gameplay.Player;
+﻿using _CodeBase.Gameplay.Building;
 using UnityEngine;
 
-namespace _CodeBase.Gameplay.Building
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildSnapping
     {
@@ -26,25 +26,34 @@ namespace _CodeBase.Gameplay.Building
 
         public bool IsBuildZoneTargeted { get; private set; }
         public BuildZone TargetedBuildZone { get; private set; }
-        
+        public bool IsBuildableSnapping { get; private set; }
+
         public void Update()
         {
             if (_buildPickUp.HaveActiveBuildable == false)
+            {
+                IsBuildableSnapping = false;
                 return;
+            }
 
             Buildable buildable = _buildPickUp.ActiveBuildable;
             Transform buildableTransform = buildable.transform;
 
-            bool canSnapBuildableToBuildZone 
-                = IsBuildZoneTargeted == true && buildable.AllowedBuildZone == TargetedBuildZone.BuildZoneType;
+            bool canSnapBuildableToBuildZone = IsBuildZoneTargeted == true &&
+                                               TargetedBuildZone.BuildingAllowed == true &&
+                                               (buildable.AllowedBuildZone & TargetedBuildZone.BuildZoneType) != 0;
 
             if (canSnapBuildableToBuildZone == false)
             {
+                IsBuildableSnapping = false;
+                
                 buildableTransform.position = _pickUpPoint.position;
                 RotateToCamera(buildableTransform);
             }
             else
             {
+                IsBuildableSnapping = true;
+
                 buildableTransform.position = _raycaster.HitPoint;
                 AlignWithBuildZoneSurface(buildableTransform);
             }
@@ -76,10 +85,10 @@ namespace _CodeBase.Gameplay.Building
             Vector3 directionToCamera = _cameraTransform.position - buildableTransform.position;
             directionToCamera.y = 0;
 
-            Quaternion cameraLookAtRotation = Quaternion.LookRotation(directionToCamera);
-            Quaternion rotatorRotation = cameraLookAtRotation * Quaternion.Euler(0, _buildRotator.RotationAngle, 0);
+            Quaternion lookAtCameraRotation = Quaternion.LookRotation(directionToCamera);
+            Quaternion finalRotation = lookAtCameraRotation * Quaternion.Euler(0, _buildRotator.RotationAngle, 0);
 
-            buildableTransform.rotation = cameraLookAtRotation * rotatorRotation;
+            buildableTransform.rotation = finalRotation;
         }
 
         private void AlignWithBuildZoneSurface(Transform buildableTransform)
@@ -93,6 +102,9 @@ namespace _CodeBase.Gameplay.Building
                 forwardDirection = Vector3.ProjectOnPlane(_cameraTransform.right, surfaceNormal).normalized;
             else
                 forwardDirection = Vector3.ProjectOnPlane(_cameraTransform.forward, surfaceNormal).normalized;
+
+            if (forwardDirection == Vector3.zero)
+                forwardDirection = Vector3.ProjectOnPlane(Vector3.forward, surfaceNormal).normalized;
 
             Quaternion surfaceLookAtRotation = Quaternion.LookRotation(forwardDirection, surfaceNormal);
             Quaternion rotatorRotation = Quaternion.Euler(Vector3.up * _buildRotator.RotationAngle);

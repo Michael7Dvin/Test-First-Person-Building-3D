@@ -100,7 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9783454cee4157a3edef7145d4d0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AllowedBuildZone>k__BackingField: 1
+  _childrenBuildZones: []
+  <AllowedBuildZone>k__BackingField: 2
 --- !u!65 &8225536284765039689
 BoxCollider:
   m_ObjectHideFlags: 0

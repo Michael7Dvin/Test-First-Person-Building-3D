@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using _CodeBase.Gameplay.Building;
+using UnityEngine;
 
-namespace _CodeBase.Gameplay.Building
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildMaterialChanger
     {

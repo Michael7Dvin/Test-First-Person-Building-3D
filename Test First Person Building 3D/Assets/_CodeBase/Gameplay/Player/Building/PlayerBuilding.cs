@@ -1,8 +1,7 @@
-﻿using _CodeBase.Gameplay.Building;
-using _CodeBase.Infrastructure.Services.InputService;
+﻿using _CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
-namespace _CodeBase.Gameplay.Player
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class PlayerBuilding : MonoBehaviour
     {

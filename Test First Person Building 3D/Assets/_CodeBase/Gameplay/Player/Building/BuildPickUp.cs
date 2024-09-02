@@ -1,8 +1,8 @@
 ﻿using System;
-using _CodeBase.Gameplay.Player;
+using _CodeBase.Gameplay.Building;
 using UnityEngine;
 
-namespace _CodeBase.Gameplay.Building
+namespace _CodeBase.Gameplay.Player.Building
 {
     public class BuildPickUp
     {
@@ -28,17 +28,21 @@ namespace _CodeBase.Gameplay.Building
             if (_raycaster.HasTarget == false || _raycaster.TargetDistance > _maxPickUpDistance)
                 return;
 
-            if (_raycaster.Target.TryGetComponent(out Buildable pickUpable))
+            if (_raycaster.Target.TryGetComponent(out Buildable buildable))
             {
-                _buildableOriginalLayer = pickUpable.gameObject.layer;
-                pickUpable.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                _buildableOriginalLayer = buildable.gameObject.layer;
+                buildable.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 
-                _buildableColliderOriginalExcludeLayers = pickUpable.Collider.excludeLayers;
-                pickUpable.Collider.excludeLayers = 1 << LayerMask.NameToLayer("Player");
+                _buildableColliderOriginalExcludeLayers = buildable.Collider.excludeLayers;
+                buildable.Collider.excludeLayers = 1 << LayerMask.NameToLayer("Player");
                 
-                ActiveBuildable = pickUpable;
+                buildable.DisableChildBuildZones();
+                
+                _raycaster.IncludeLayer(LayerMask.NameToLayer("BuildZone"));
+                
+                ActiveBuildable = buildable;
                 HaveActiveBuildable = true;
-                ActiveBuildableChanged?.Invoke(pickUpable);
+                ActiveBuildableChanged?.Invoke(buildable);
             }
         }
         
@@ -47,6 +51,10 @@ namespace _CodeBase.Gameplay.Building
             ActiveBuildable.gameObject.layer = _buildableOriginalLayer;
             ActiveBuildable.Collider.excludeLayers = _buildableColliderOriginalExcludeLayers;
             
+            ActiveBuildable.EnableChildBuildZones();
+
+            _raycaster.ExcludeLayer(LayerMask.NameToLayer("BuildZone"));
+
             ActiveBuildable = null;
             HaveActiveBuildable = false;
             ActiveBuildableChanged?.Invoke(null);

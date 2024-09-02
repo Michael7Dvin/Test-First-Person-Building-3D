@@ -121,4 +121,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2920a86589b4478b8442c357ef13ab16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BuildZoneType>k__BackingField: 1
+  <BuildZoneType>k__BackingField: 2
+  <BuildingAllowed>k__BackingField: 1
