@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace _CodeBase.Infrastructure.Services.InputService
@@ -7,6 +8,10 @@ namespace _CodeBase.Infrastructure.Services.InputService
         Vector2 PlayerLookRotation { get; }
         Vector3 PlayerMoveDirection { get; }
 
-        void Enable();
+        event Action Interaction;
+        event Action RotateToward;
+        event Action RotateAway;
+        
+        void Initialize();
     }
 }

@@ -5,7 +5,7 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
 {
     public interface IPlayerFactory
     {
-        UniTask WarmUp();
-        UniTask Create(Vector3 position, Quaternion rotation);
+        UniTask WarmUpAsync();
+        void Create(Vector3 position, Quaternion rotation);
     }
 }

@@ -21,7 +21,9 @@ namespace _CodeBase.Infrastructure.StateMachine.States
 
         public async void Enter()
         {
-            await _playerFactory.Create(_roomLevelConfig.PlayerSpawnPosition, _roomLevelConfig.PlayerRotation);
+            await _playerFactory.WarmUpAsync();
+            
+            _playerFactory.Create(_roomLevelConfig.PlayerSpawnPosition, _roomLevelConfig.PlayerRotation);
             _gameStateMachine.EnterState<GameplayState>();
         }
     }
