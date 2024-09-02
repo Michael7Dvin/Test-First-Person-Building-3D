@@ -9,18 +9,20 @@ namespace _CodeBase.Gameplay.Player
         [SerializeField] private LayerMask _mask;
 
         private float _raycastRange;
-
+        
+        private RaycastHit _hit;
+        
         public void Construct(float raycastRange)
         {
             _raycastRange = raycastRange;
         }
 
         public Transform Target { get; private set;}
-        public RaycastHit Hit { get; private set; }
-        
-        public float TargetDistance => Hit.distance;
-        public Vector3 HitPoint => Hit.point;
-        public Vector3 HitNormal => Hit.normal;
+
+        public bool HasTarget { get; private set; }
+        public float TargetDistance => _hit.distance;
+        public Vector3 HitPoint => _hit.point;
+        public Vector3 HitNormal => _hit.normal;
         
         public event Action CurrentTargetChanged;
         
@@ -30,11 +32,15 @@ namespace _CodeBase.Gameplay.Player
 
             if (Physics.Raycast(ray, out RaycastHit hit, _raycastRange, _mask))
             {
-                Hit = hit;
+                _hit = hit;
+                HasTarget = true;
                 SetCurrentTarget(hit.transform);
             }
             else
+            {
+                HasTarget = false;
                 SetCurrentTarget(null);
+            }
         }
 
         private void SetCurrentTarget(Transform newTarget)

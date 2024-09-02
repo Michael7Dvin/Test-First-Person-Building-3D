@@ -1,42 +1,37 @@
 ﻿using _CodeBase.StaticData;
-using UnityEngine;
 
 namespace _CodeBase.Gameplay.Building
 {
     public class BuildRotator
     {
         private readonly PlayerConfig _playerConfig;
-        private readonly PickUpInteraction _pickUpInteraction;
+        private readonly BuildPickUp _buildPickUp;
 
-        public BuildRotator(PlayerConfig playerConfig, PickUpInteraction pickUpInteraction)
+        public BuildRotator(PlayerConfig playerConfig, BuildPickUp buildPickUp)
         {
             _playerConfig = playerConfig;
-            _pickUpInteraction = pickUpInteraction;
-
-            _pickUpInteraction.CurrentPickUpableChanged += ResetRotation;
+            _buildPickUp = buildPickUp;
         }
 
-        public float CurrentRotationOffset { get; private set; }
+        public float RotationAngle { get; private set; }
         
-        private void ResetRotation(PickUpable pickUpable)
-        {
-            CurrentRotationOffset = 0;
-        }
+        public void ResetRotationAngle(Buildable buildable) => 
+            RotationAngle = 0;
 
-        public void RotateAway()
+        public void RotateAway() => 
+            Rotate(false);
+
+        public void RotateTowards() => 
+            Rotate(true);
+
+        private void Rotate(bool isRotationAnglePositive)
         {
-            if (_pickUpInteraction.CurrentPickUpable == null)
+            if (_buildPickUp.HaveActiveBuildable == false)
                 return;
 
-            CurrentRotationOffset -= _playerConfig.RotationAnglePerInput;
-        }
-
-        public  void RotateTowards()
-        {
-            if (_pickUpInteraction.CurrentPickUpable == null)
-                return;
+            float rotationAngle = _playerConfig.RotationAnglePerInput * (isRotationAnglePositive ? 1 : -1);
             
-            CurrentRotationOffset += _playerConfig.RotationAnglePerInput;
+            RotationAngle += rotationAngle;
         }
     }
 }

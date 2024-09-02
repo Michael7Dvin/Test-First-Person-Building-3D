@@ -15,8 +15,7 @@ GameObject:
   - component: {fileID: 5157798310703252640}
   - component: {fileID: 6933504238837745407}
   - component: {fileID: 4974031718280541440}
-  - component: {fileID: 1196822953477715878}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,19 +142,6 @@ MonoBehaviour:
   _mask:
     serializedVersion: 2
     m_Bits: 384
---- !u!114 &1196822953477715878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36097561414115813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bef6fb216d114f25b33c95e86386bddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _raycaster: {fileID: 4974031718280541440}
 --- !u!1 &3001915719062457796
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +151,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6019932496070176455}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Pick Up Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,6 +188,10 @@ PrefabInstance:
     - target: {fileID: 5213827480904437615, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
       propertyPath: m_Name
       value: Player Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5213827480904437615, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7009518790890730965, guid: 2ad6318222b6e6c42a302d6d202c0bd9, type: 3}
       propertyPath: m_LocalPosition.x

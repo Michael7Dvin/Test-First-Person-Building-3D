@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6634999526852653957}
   - component: {fileID: 5678367622511016084}
   - component: {fileID: -9194928259577930467}
-  - component: {fileID: 3715358167802139925}
+  - component: {fileID: 7499467829704619153}
   m_Layer: 7
   m_Name: Long Painting
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2494299706209154328}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca9783454cee4157a3edef7145d4d0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AllowedBuildZoneType>k__BackingField: 1
---- !u!65 &3715358167802139925
+  <AllowedBuildZone>k__BackingField: 1
+--- !u!65 &7499467829704619153
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,5 +120,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.2, y: 0.45, z: 0.05000002}
-  m_Center: {x: 0, y: 0, z: 0.024999999}
+  m_Size: {x: 0.45000014, y: 0.049999997, z: 1.2000003}
+  m_Center: {x: 0, y: 0.024999999, z: 0}

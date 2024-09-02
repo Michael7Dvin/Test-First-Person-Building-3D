@@ -46,15 +46,15 @@ namespace _CodeBase.Infrastructure.Services.PlayerFactory
             float maxRaycastRange = Mathf.Max(_playerConfig.MaxPickUpDistance, _playerConfig.MaxSnappingDistance);
             player.Raycaster.Construct(maxRaycastRange);
             
-            player.PickUpInteraction.Construct(_playerConfig.MaxPickUpDistance);
-            
-            BuildRotator buildRotator = new(_playerConfig, player.PickUpInteraction);
-            BuildSnapping buildSnapping = new(player.Raycaster, player.PickUpInteraction, buildRotator, player.Camera.transform, player.PickUpPoint);
-            BuildPlacementValidator buildPlacementValidator = new (player.PickUpInteraction);
+            BuildPickUp buildPickUp = new (player.Raycaster, _playerConfig.MaxPickUpDistance);
+            BuildRotator buildRotator = new(_playerConfig, buildPickUp);
+            BuildSnapping buildSnapping = new(player.Raycaster, buildPickUp, buildRotator, player.Camera.transform, player.PickUpPoint);
+            BuildValidator buildValidator = new (buildPickUp, buildSnapping);
             BuildMaterialChanger buildMaterialChanger = 
-                new (buildPlacementValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);
-            BuildPlacing buildPlacing = new BuildPlacing(player.PickUpInteraction, buildPlacementValidator, buildMaterialChanger);
-            player.Construct(_inputService, buildRotator, buildSnapping, buildPlacing, buildPlacementValidator, buildMaterialChanger);
+                new (buildPickUp, buildValidator, _playerConfig.ValidPlacementMaterial, _playerConfig.InvalidPlacementMaterial);
+            BuildPlacer buildPlacer = new BuildPlacer(buildPickUp, buildValidator, buildMaterialChanger);
+            
+            player.Construct(_inputService, buildRotator, buildSnapping, buildPlacer, buildValidator, buildMaterialChanger, buildPickUp);
         }
         
         private async UniTaskVoid ValidateWarmUpping()

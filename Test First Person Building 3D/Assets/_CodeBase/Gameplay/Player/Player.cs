@@ -5,7 +5,6 @@ using UnityEngine;
 namespace _CodeBase.Gameplay.Player
 {
     [RequireComponent(typeof(LookAround), typeof(Mover), typeof(Raycaster))]
-    [RequireComponent(typeof(PickUpInteraction))]
     public class Player : MonoBehaviour
     {
         [field: SerializeField] public Camera Camera { get; private set; }
@@ -13,64 +12,49 @@ namespace _CodeBase.Gameplay.Player
         
         private BuildRotator _buildRotator;
         private BuildSnapping _buildSnapping;
-        private BuildPlacing _buildPlacing;
-        private BuildPlacementValidator _buildPlacementValidator;
+        private BuildPlacer _buildPlacer;
+        private BuildValidator _buildValidator;
         private BuildMaterialChanger _buildMaterialChanger;
+        private BuildPickUp _buildPickUp;
         private IInputService _inputService;
 
         public void Construct(IInputService inputService,
             BuildRotator buildRotator,
             BuildSnapping buildSnapping,
-            BuildPlacing buildPlacing,
-            BuildPlacementValidator buildPlacementValidator,
-            BuildMaterialChanger buildMaterialChanger)
+            BuildPlacer buildPlacer,
+            BuildValidator buildValidator,
+            BuildMaterialChanger buildMaterialChanger, 
+            BuildPickUp buildPickUp)
         {
             _inputService = inputService;
             _buildRotator = buildRotator;
             _buildSnapping = buildSnapping;
-            _buildPlacing = buildPlacing;
-            _buildPlacementValidator = buildPlacementValidator;
+            _buildPlacer = buildPlacer;
+            _buildValidator = buildValidator;
             _buildMaterialChanger = buildMaterialChanger;
+            _buildPickUp = buildPickUp;
             
-            _inputService.RotateAwayPerformed += _buildRotator.RotateAway;
+            _inputService.RotateAwayPerformed +=  _buildRotator.RotateAway;
             _inputService.RotateTowardPerformed += _buildRotator.RotateTowards;
             
             _inputService.PickUpPressed += OnInteractionInput;
-            
+
             Raycaster.CurrentTargetChanged += _buildSnapping.OnRaycasterTargetChanged;
-
-            PickUpInteraction.CurrentPickUpableChanged += OnCurrentPickUpableChanged;
-        }
-
-        private void OnCurrentPickUpableChanged(PickUpable obj)
-        {
-            _buildMaterialChanger.SetPickUpable(obj);
-        }
-
-        private void OnInteractionInput()
-        {
-            if (PickUpInteraction.CurrentPickUpable == null)
-            {
-                PickUpInteraction.PickUp();
-            }
-            else
-            {
-                _buildPlacing.Place();
-            }
+            _buildPickUp.ActiveBuildableChanged += _buildRotator.ResetRotationAngle;
+            _buildPickUp.ActiveBuildableChanged += _buildMaterialChanger.SetBuildableOriginalMaterial;
         }
 
         public LookAround LookAround { get; private set; }
+
         public Mover Mover { get; private set; }
+
         public Raycaster Raycaster { get; private set; }
-        public PickUpInteraction PickUpInteraction { get; private set; }
-        
+
         private void Awake()
         {
             LookAround = GetComponent<LookAround>();
             Mover = GetComponent<Mover>();
             Raycaster = GetComponent<Raycaster>();
-            
-            PickUpInteraction = GetComponent<PickUpInteraction>();
         }
 
         private void Update()
@@ -84,7 +68,19 @@ namespace _CodeBase.Gameplay.Player
             _inputService.RotateAwayPerformed -= _buildRotator.RotateAway;
             _inputService.RotateTowardPerformed -= _buildRotator.RotateTowards;
             
+            _inputService.PickUpPressed -= OnInteractionInput;
+
             Raycaster.CurrentTargetChanged -= _buildSnapping.OnRaycasterTargetChanged;
+            _buildPickUp.ActiveBuildableChanged -= _buildRotator.ResetRotationAngle;
+            _buildPickUp.ActiveBuildableChanged -= _buildMaterialChanger.SetBuildableOriginalMaterial;
+        }
+
+        private void OnInteractionInput()
+        {
+            if (_buildPickUp.ActiveBuildable == null)
+                _buildPickUp.PickUp();
+            else
+                _buildPlacer.Place();
         }
     }
 }

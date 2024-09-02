@@ -3,9 +3,9 @@
 namespace _CodeBase.Gameplay.Building
 {
     [RequireComponent(typeof(Collider), typeof(Renderer))]
-    public class PickUpable : MonoBehaviour
+    public class Buildable : MonoBehaviour
     {
-        [field: SerializeField] public BuildZoneType AllowedBuildZoneType { get; private set; }
+        [field: SerializeField] public BuildZoneType AllowedBuildZone { get; private set; }
 
         public Collider Collider { get; private set; }
         public Renderer Renderer { get; private set; }

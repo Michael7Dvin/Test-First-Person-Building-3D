@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3234229108021154204}
   - component: {fileID: 8232439757613592638}
   - component: {fileID: -4369075325934355074}
-  - component: {fileID: 511154164457181205}
+  - component: {fileID: 2738492784652742476}
   m_Layer: 7
   m_Name: Long Box
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 929291226090417497}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AllowedBuildZoneType>k__BackingField: 0
---- !u!65 &511154164457181205
+--- !u!65 &2738492784652742476
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,5 +120,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.79999995, y: 0.6, z: 1.5}
+  m_Size: {x: 1.5, y: 0.6, z: 0.8000001}
   m_Center: {x: 0, y: 0.3, z: 0}

@@ -4,43 +4,40 @@ namespace _CodeBase.Gameplay.Building
 {
     public class BuildMaterialChanger
     {
-        private readonly BuildPlacementValidator _buildPlacementValidator;
+        private readonly BuildPickUp _buildPickUp;
+        private readonly BuildValidator _buildValidator;
         private readonly Material _validPlacementMaterial;
         private readonly Material _invalidPlacementMaterial;
+        
         private Material _originalMaterial;
-        private Renderer _renderer;
 
-        public BuildMaterialChanger(BuildPlacementValidator buildPlacementValidator,
+        public BuildMaterialChanger(BuildPickUp buildPickUp,
+            BuildValidator buildValidator,
             Material validPlacementMaterial,
             Material invalidPlacementMaterial)
         {
-            _buildPlacementValidator = buildPlacementValidator;
+            _buildPickUp = buildPickUp;
+            _buildValidator = buildValidator;
             _validPlacementMaterial = validPlacementMaterial;
             _invalidPlacementMaterial = invalidPlacementMaterial;
         }
 
-        public void SetPickUpable(PickUpable pickUpable)
+        public void SetBuildableOriginalMaterial(Buildable buildable)
         {
-            if (pickUpable != null)
-            {
-                _originalMaterial = pickUpable.Renderer.material;
-                _renderer = pickUpable.Renderer;
-            }
+            if (_buildPickUp.HaveActiveBuildable == true) 
+                _originalMaterial = buildable.Renderer.material;
         }
 
         public void Update()
         {
-            if (_renderer != null)
-                _renderer.material = _buildPlacementValidator.CanPlace() ? _validPlacementMaterial : _invalidPlacementMaterial;
-        }
-
-        public void RestoreOriginalMaterial()
-        {
-            if (_renderer != null)
+            if (_buildPickUp.HaveActiveBuildable == true)
             {
-                _renderer.material = _originalMaterial;
-                _renderer = null;                   
+                _buildPickUp.ActiveBuildable.Renderer.material = 
+                    _buildValidator.CanPlace() ? _validPlacementMaterial : _invalidPlacementMaterial;
             }
         }
+
+        public void RestoreOriginalMaterial() => 
+            _buildPickUp.ActiveBuildable.Renderer.material = _originalMaterial;
     }
 }
